@@ -27,7 +27,8 @@ pipeline {
             }
 
         }
-}
+    }
+    
     post { 
         always { 
             echo 'Deleting workspace artifacts...!'  // this always executes if pipeline fail or success.

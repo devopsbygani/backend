@@ -26,3 +26,21 @@ pipeline {
         }
 }
 }
+
+post { 
+        always { 
+            echo 'Deleting workspace artifacts...!'  // this always executes if pipeline fail or success.
+            deleteDir()
+
+        }
+
+        failure {
+            echo 'I willsay Hello if pipeline fail!'  // this will executes if pipeline fail
+        }
+
+        success {
+            echo 'I willsay Hello if pipeline success!'  // this will executes if pipeline success
+        }
+
+}
+

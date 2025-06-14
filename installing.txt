@@ -1,0 +1,11 @@
+# Agent has to be ready with .
+* dnf module disable nodejs -y 
+* dnf module enable nodejs:20 -y
+* dnf install nodejs -y
+
+# docker installing
+* sudo dnf -y install dnf-plugins-core
+* dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+* dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+* systemctl enable docker
+* usermod -aG docker ec2-user

@@ -20,14 +20,13 @@ pipeline {
             steps {
                 sh """
                 docker build -t promptai/backend:${appVersion} .
+                docker images
                 """
             }
 
         }
 }
-}
-
-post { 
+    post { 
         always { 
             echo 'Deleting workspace artifacts...!'  // this always executes if pipeline fail or success.
             deleteDir()
@@ -42,5 +41,8 @@ post {
             echo 'I willsay Hello if pipeline success!'  // this will executes if pipeline success
         }
 
+    }
 }
+
+
 

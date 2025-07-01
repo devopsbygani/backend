@@ -1,5 +1,7 @@
 ConfigMap:
   host: mysql # this will change for RDS.
-
+Images:
+  image: 
+  imageVersion: IMAGE_VERSION
 Service:
   port: 8080

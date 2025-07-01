@@ -39,7 +39,6 @@ pipeline {
                 // i - replace in IMAGE_VERSION value with $appversion value , target file is values-dev.yaml
                 echo 'helm upgrade -- install backend -n <namespace> -f <values-dev.yaml> .'
             
-
             }
 
         }

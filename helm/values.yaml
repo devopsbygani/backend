@@ -1,0 +1,5 @@
+ConfigMap:
+  host: mysql # this will change for RDS.
+
+Service:
+  port: 8080

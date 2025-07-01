@@ -21,13 +21,16 @@ pipeline {
 
         stage ('docker image build') {
             steps {
-                sh """
-                docker build -t promptai/backend:${appVersion} .
-                // docker build -t expense/backend:${appVersion} .
-                docker images
-                // docker tag expense/backend:${appVersion} 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
-                // docker push 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
-                """
+                withAWS(region: 'us-east-1', credentials: 'aws-cred') {
+                    sh """
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 905418383993.dkr.ecr.us-east-1.amazonaws.com
+                    // docker build -t promptai/backend:${appVersion} .
+                    docker build -t expense/backend:${appVersion} .
+                    docker images
+                    docker tag expense/backend:${appVersion} 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
+                    docker push 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
+               """
+                 } 
             }
 
         }
@@ -53,11 +56,11 @@ pipeline {
         }
 
         failure {
-            echo 'I willsay Hello if pipeline fail!'  // this will executes if pipeline fail
+            echo 'pipeline is fail!'  // this will executes if pipeline fail
         }
 
         success {
-            echo 'I willsay Hello if pipeline success!'  // this will executes if pipeline success
+            echo 'pipeline is success!'  // this will executes if pipeline success
         }
 
     }

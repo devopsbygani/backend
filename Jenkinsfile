@@ -6,6 +6,7 @@ pipeline {
     environment {
         appVersion = '' //global variable
         environment = 'dev'
+        project = 'expense'
     }
 
     stages {
@@ -34,17 +35,20 @@ pipeline {
 
         }
 
-        // stage ('deploy') {
-        //     steps {
-        //         echo 'configure aws credentials' // use kubernetes admin iam role key configure , plugin : aws credential & aws steps
-        //         echo 'backend helm file in this folder, redirect to it' 
-        //         echo 'sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml'  
-        //         // i - replace in IMAGE_VERSION value with $appversion value , target file is values-dev.yaml
-        //         echo 'helm upgrade -- install backend -n <namespace> -f <values-${environment}.yaml> .'
-            
-        //     }
+        stage ('deploy') {
+            steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-cred') {
+                    sh """
+                    cd helm
+                    aws eks update-kubeconfig --region us-east-1 --name ${project}-${environment}
+                    sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
+                    helm upgrade --install backend -n ${project} -f values.${environment}.yaml .
+                    """
+                }
+                // i - replace in IMAGE_VERSION value with $appversion value , target file is values-dev.yaml          
+            }
 
-        // }
+        }
     }
     
     post { 

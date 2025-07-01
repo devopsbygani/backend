@@ -1,7 +1,7 @@
 ConfigMap:
   host: mysql # this will change for RDS.
 Images:
-  image: 
+  image: 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend
   imageVersion: IMAGE_VERSION
 Service:
   port: 8080

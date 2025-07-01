@@ -24,12 +24,11 @@ pipeline {
                 withAWS(region: 'us-east-1', credentials: 'aws-cred') {
                     sh """
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 905418383993.dkr.ecr.us-east-1.amazonaws.com
-                    // docker build -t promptai/backend:${appVersion} .
                     docker build -t expense/backend:${appVersion} .
                     docker images
                     docker tag expense/backend:${appVersion} 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
                     docker push 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
-               """
+                    """
                  } 
             }
 

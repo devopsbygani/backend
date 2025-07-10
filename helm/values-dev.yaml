@@ -1,5 +1,5 @@
 ConfigMap:
-  host: mysql.cj8cuccukocn.us-east-1.rds.amazonaws.com # this will change for RDS.
+  host: expense-dev.cj8cuccukocn.us-east-1.rds.amazonaws.com # this will change for RDS.
 depolyment:
   imageURL: 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend
   imageVersion: IMAGE_VERSION

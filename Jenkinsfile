@@ -24,8 +24,7 @@ pipeline {
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-cred') {
                     sh """
-                    cd helm
-                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 905418383993.dkr.ecr.us-east-1.amazonaws.com
+                                        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 905418383993.dkr.ecr.us-east-1.amazonaws.com
                     docker build -t expense/backend:${appVersion} .
                     docker images
                     docker tag expense/backend:${appVersion} 905418383993.dkr.ecr.us-east-1.amazonaws.com/expense/backend:${appVersion}
@@ -40,8 +39,8 @@ pipeline {
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-cred') {
                     sh """
-                    cd helm
                     aws eks update-kubeconfig --region us-east-1 --name ${project}-${environment}
+                    cd helm
                     sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
                     helm upgrade --install backend -n ${project} -f values.${environment}.yaml .
                     """

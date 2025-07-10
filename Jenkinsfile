@@ -1,9 +1,8 @@
 pipeline {
-    // agent {
-    //     label 'AGENT-1'
-    // }
-    agent any
-
+    agent {
+        label 'AGENT-1'
+    }
+ 
     environment {
         appVersion = '' //global variable
         environment = 'dev'

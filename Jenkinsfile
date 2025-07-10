@@ -24,6 +24,7 @@ pipeline {
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-cred') {
                     sh """
+                    cd helm
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 905418383993.dkr.ecr.us-east-1.amazonaws.com
                     docker build -t expense/backend:${appVersion} .
                     docker images

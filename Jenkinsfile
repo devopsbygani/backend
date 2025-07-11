@@ -53,10 +53,18 @@ pipeline {
         stage ('trigger frontend') {
             steps {
                 echo 'triggering frontend'
-                build(job: "frontend")
+                build job: "frontend", wait: true
             }
             
         }
+
+        // stage ('deploy-cd') {
+        //     steps {
+        //         echo 'triggering backend cd'
+        //         build job: "backend-cd",parameters: [string(name: version, values: "$appVersion")], wait: true
+        //     }
+            
+        // }
 
 
     }

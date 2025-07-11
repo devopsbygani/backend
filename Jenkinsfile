@@ -20,6 +20,27 @@ pipeline {
                 }
             }
         }
+       /* stage ('sonar Analysis'){
+            environment {
+                SCANNER_HOME = tool 'sonar-6.0' // the name used while setup of scanner 
+            }
+            steps{
+                withSonarQubeEnv('Sonar') {
+                    sh '${SCANNER_HOME}/bin/sonar-scanner' 
+              
+                }
+                  // sonar-scanner check for files sonar-project.properties     
+            }
+        }
+        stage("Quality Gate") {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        } */
 
         stage ('docker image build') {
             steps {
@@ -61,7 +82,7 @@ pipeline {
         // stage ('deploy-cd') {
         //     steps {
         //         echo 'triggering backend cd'
-        //         build job: "backend-cd",parameters: [string(name: version, values: "$appVersion")], wait: true
+        //         build job: "backend-cd",parameters: [string(name: version, values: "$appVersion"),string(name: )], wait: true
         //     }
             
         // }

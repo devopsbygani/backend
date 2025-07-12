@@ -2,6 +2,10 @@ pipeline {
     agent {
         label 'AGENT-1'
     }
+
+    parameters {
+       booleanParam(name: 'deploy', defaultValue: true, description: 'Toggle this value') 
+    }
  
     environment {
         appVersion = '' //global variable
@@ -56,8 +60,10 @@ pipeline {
             }
 
         }
-
-        stage ('deploy') {
+/*        stage ('deploy') {
+            when {
+                expression {} params.deploy }
+            }    
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-cred') {
                     sh """
@@ -77,15 +83,16 @@ pipeline {
                 build job: "frontend", wait: true
             }
             
-        }
+        } */
 
-        // stage ('deploy-cd') {
-        //     steps {
-        //         echo 'triggering backend cd'
-        //         build job: "backend-cd",parameters: [string(name: version, values: "$appVersion"),string(name: )], wait: true
-        //     }
+        stage ('deploy-cd') {
+            steps {
+                echo 'triggering backend cd'
+                build job: "backend-cd",parameters: [string(name: version, values: "$appVersion"),
+                string(name: ENV, values: "dev")], wait: true
+            }
             
-        // }
+        }
 
 
     }

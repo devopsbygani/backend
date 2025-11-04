@@ -12,6 +12,7 @@ pipeline {
         environment = 'dev'
         project = 'expense'
         component = 'backend'
+        account_id = ''
     }
 
     stages {
